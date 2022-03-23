@@ -1,6 +1,6 @@
-45c57193cd590208c3fcf7a62cc6fad6 *DESCRIPTION
+3cbabd17a65717ce7683f0d308ae5f23 *DESCRIPTION
 a9b39d668d3c07b976f8671fee9011b4 *NAMESPACE
-893841815cbc80f6a216f976e9b0612b *NEWS.md
+d139bf81bf7a985520ce2185e97136c4 *NEWS.md
 6ccea2840b4cee9d614f0869c8709871 *R/adjust_rate.R
 e0d94392162f785d37b7fdf242dc1299 *R/adjust_rate.ft.R
 9b30fd6c56f17c5296d3df9c0c83df95 *R/auto_rate.R
@@ -17,7 +17,7 @@ f027696556fb462da9a15b6ce2da23ca *R/format_time.R
 a951ed4710bf2d2b6e2b1744483d1559 *R/import_file.R
 d8d59fe296c0164b59a96ca6b21b2d84 *R/inspect.R
 9a9e577782357f2892e47d3e280f8466 *R/inspect.ft.R
-ddc65435bf4b4e134d5f29ca06ea3970 *R/oxy_crit.R
+5160f519d5d5ba7f2fb52dd583570480 *R/oxy_crit.R
 9377bf3fc4e1bbe463677a8e806edcd9 *R/respR.R
 19396cc923d4b86529b22e7ee6518ef3 *R/sim_data.R
 cc1888854384db8529c3cd519b6a702e *R/startup.R
@@ -29,7 +29,7 @@ b9a817c1efc331ad0afbd3050cf80c34 *R/unit_args.R
 723665eb1aedf2ee34f6b87ed646e445 *R/util_funs.R
 2e568a52dade4b525589fdc62052602c *R/util_plots.R
 0ec563ae747292ce1817535ecb7bf33b *R/util_val.R
-8ca4ceee92db455f0dbb3ae7bb9c88ec *README.md
+7e0f4e537352be99473ea4011fa783a2 *README.md
 6cbd738c4ccf4f10cd2a7ea6a8c49614 *data/algae.rd.rda
 c824f463e5b1f9ad4bbc2696c05bba97 *data/background_con.rd.rda
 6b64245b24f0bc90ed6ac188beb5c2a1 *data/background_exp.rd.rda
@@ -102,7 +102,7 @@ c1a9e5ebf603c6e216e3ec32cb6c8f71 *man/mean.convert_rate.ft.Rd
 5d62704f9e299131f50d518fb2051ae9 *man/mean.oxy_crit.Rd
 9d2f549b20c9e1e18a28a70638a0b434 *man/midpt.Rd
 4a4e77ac57cafc878f507313bf1c2e6e *man/nainf.omit.Rd
-e08f850e373f49664af971ebffe3a661 *man/oxy_crit.Rd
+94d849ec79eea9eb782029cbf83a059d *man/oxy_crit.Rd
 bcc9cdc404d3f575d939be468237399a *man/plot.adjust_rate.Rd
 195220702bd34f1bdc4a622ab8bdba9a *man/plot.adjust_rate.ft.Rd
 360a536889ff2d2363b53ef50c0f8b10 *man/plot.auto_rate.Rd
@@ -179,7 +179,7 @@ feef97855b9dd41c596405178bb79636 *tests/testthat/test-convert_rate.R
 529290b370923ed48624783970f64d27 *tests/testthat/test-format_time.R
 3c3694daa585a45d04956eac4521eb0f *tests/testthat/test-inspect.R
 4aab4ab0f51268addf51fadcb75ab3c6 *tests/testthat/test-inspect.ft.R
-60ec57ba0d0915a66785c4dfd10489f0 *tests/testthat/test-oxy_crit.R
+95cb5c70c77ad00214895e3e70b864dc *tests/testthat/test-oxy_crit.R
 dd81442fc925c2ae7e28394712050e19 *tests/testthat/test-subsample.R
 579016f940c2f86a4cc02d7897164f22 *tests/testthat/test-subset_data.R
 93f126294eda6e0fc0cbb2941f4c13be *tests/testthat/test-subset_rate.R
