@@ -2,8 +2,8 @@ Package: respR
 Type: Package
 Title: Import, Process, Analyse, and Calculate Rates from Respirometry
         Data
-Date: 2023-01-06
-Version: 2.2.0
+Date: 2023-06-04
+Version: 2.3.0
 Maintainer: Nicholas Carey <nicholascarey@gmail.com>
 Authors@R: c(
     person(given = "Nicholas", 
@@ -30,11 +30,10 @@ RoxygenNote: 7.2.3
 Imports: data.table, dplyr, glue, graphics, grDevices, lubridate,
         magrittr, marelac, purrr, readxl, roll, segmented, stats,
         stringr, utils, xml2
-Suggests: knitr, rmarkdown, rMR, DiagrammeR, FishResp, respirometry,
-        testthat, covr
+Suggests: knitr, rmarkdown, rMR, FishResp, respirometry, testthat, covr
 NeedsCompilation: no
-Packaged: 2023-01-06 09:46:21 UTC; nicholascarey
+Packaged: 2023-06-04 18:27:37 UTC; nicholascarey
 Author: Nicholas Carey [aut, cre],
   Januar Harianto [aut]
 Repository: CRAN
-Date/Publication: 2023-01-06 13:30:07 UTC
+Date/Publication: 2023-06-05 07:50:02 UTC

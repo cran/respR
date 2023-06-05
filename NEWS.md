@@ -1,4 +1,4 @@
-# respR 2.2.0
+# respR 2.3.0
 
 <!---
 Each version should:
@@ -14,26 +14,53 @@ Security:     to invite users to upgrade in case of vulnerabilities.
 All version changes go in here now when you make a commit! 
 --->
 
+## Version 2.3.0 -- 2023-xx-xx
+
+Ever read a paper and wanted to compare metabolic rates to your own results but they were in a different unit? New in this release is `convert_MR()`, a function for converting between different units of oxygen uptake or production rate. These can be absolute, mass-specific, or area-specific rates. See [here](https://januarharianto.github.io/respR/reference/convert_MR.html) for examples. It also works on `convert_rate` or `convert_rate.ft` objects so you can change the output units of a `respR` analysis without having to re-run the whole thing. 
+
+To help with this new functionality, this version has undergone a major update around unit handling. In case you didn't know, `respR` accepts different variations in unit formatting. E.g. `"mg per h"`, `"mg H"`, `"mg hr-1"`, etc. are all recognised as `mgO2/h`. There's been a substantial internal update to unit recognition to use [regex](https://en.wikipedia.org/wiki/Regular_expression) instead of a brute force approach. This system is more robust and accepts even more variations in style; units can be formed from abbreviated versions or words (e.g. `mg` or `milligram`), separated by a space, forward slash, dot, or underscore, are case-insensitive, and accept other variations (e.g `km2`, `km -2`, `km^2`, `kmsq`, etc). In addition a few new units of dissolved oxygen (DO) and metabolic rate are now accepted. See below. 
+
+A couple of minor but handy changes: salinity, temperature, and atmospheric pressure are now saved to summary tables in `convert_rate()` and `convert_rate.ft()` outputs to help with keeping track of results from different experiments; and in `inspect()`, `inspect.ft()`, and `oxy_crit()` you can now specify columns by *name* as well as column *number*. 
+
+Lastly, a major change is that `import_file()` has been deprecated. It is still fully functional, but will not be updated and will be removed in the next major release version (i.e. `v3.0`, although this is not planned for any time soon). This was only ever intended to be a convenience function for those completely new to `R`, and was always experimental as there is no way we could test against every variation of oxygen sensor system output files. However, we found some users were overly reliant on it and on encountering a problem with a file asking us to update the function rather than try to import it themselves. To our knowledge, every oxygen sensor system exports data in formats (e.g. `.csv`, `.txt`, `.xlsx`) which can be easily imported into `R` using generic functions such as `read.csv`. This is a basic skill anyone using `R` should be comfortable with, and also allows for much more control and the ability to troubleshoot issues.
+
+==================================== New =======================================
+
+- NEW: `convert_MR()`- A new function for converting metabolic rates between different units of oxygen uptake or production. See examples [here](https://januarharianto.github.io/respR/reference/convert_MR.html) and [here](https://januarharianto.github.io/respR/articles/closed.html#check-the-result).
+- NEW: `convert_rate()`, `convert_rate.ft()` - Salinity (`S`), temperature (`t`), and pressure (`P`) inputs are now saved as columns in the final `$summary` table. These can be entered even if they are not required for conversions to the output rate unit, which may help with keeping track of results across different experiments. 
+- NEW: `inspect()`, `inspect.ft()`, `oxy_crit()` - Column names can now be used to specify columns, not just column number. See example [here](https://januarharianto.github.io/respR/reference/inspect.html#examples).
+- NEW: Raw data can now be in these units of dissolved oxygen (DO), and can be used for conversions in `convert_DO` or in `convert_rate` as the `oxy.unit` of the original data: `ul/l`, `ul/kg`, `mm3/kg` (equivalent to `ul/kg`), `cm3/kg` (equivalent to `ml/kg`), `ppm` (i.e. parts per million, equivalent to `mg/kg`). In addition, `"cc"` (abbreviation for cubic centimetres, as sometimes used in older publications) is recognised as `cm3` (e.g. `cc/L` as DO, `cc/h` as a metabolic rate). 
+- NEW: The following units of oxygen amount can now be used in `convert_rate` or `convert_rate.ft` as part of the output unit, or in `convert_MR` to convert between units of oxygen uptake: `mm3`, `cm3`, `ul`. e.g. `ul/h` or `cm3/day/kg`, etc.
+- NEW: Tested with `R` version [4.3.0](https://www.r-bloggers.com/2023/04/whats-new-in-r-4-3-0/) 
+
+=================================== Changes ====================================
+
+- CHANGE: `import_file()` has been deprecated. It is still fully functional but will not be updated and will be removed in a future version. See above.
+- CHANGE: Units are now parsed to a standardised format in outputs. For example, in `convert_rate` if you specify `"MG per h"` or `"mg h-1"` as the output unit this will appear as `"mgO2/hr"` in the output object; `"ml min-1 kg-1"` becomes `"mLO2/min/kg"`, etc. This means you can be sure the unit is being recognised correctly even if your input is formed differently. 
+- CHANGE: `unit_args()` updated for new units.
+- CHANGE: Errors and warnings have been revised to be more concise and informative, especially about what function they originate from. 
+
+
 ## Version 2.2.0 -- 2023-01-06
 
 This update focuses on extending to the flowthrough respirometry workflow the functionality introduced in `v2.1` for exploring and selecting final rates. The online [vignette](https://januarharianto.github.io/respR/articles/flowthrough.html#case-8-rolling-rate) has been updated with some examples. 
 
 ==================================== New =======================================
 
-NEW: `convert_rate.ft` - Objects containing multiple rates can now be plotted in three different ways to help explore the results and decide how to summarise them. This pairs particularly well with `select_rate.ft` for exploring and selecting a final reportable rate. 
-NEW: `select_rate.ft` - New function for selecting from amongst multiple rates in `convert_rate.ft` objects in flowthrough respirometry analyses. It is actually a simple wrapper for the `select_rate` function, so you can use either. 
-NEW: `select_rate` - has the additional methods `rep_omit`, `rank_omit`, and `manual_omit` for omitting rates.
-NEW: `select_rate` - has the additional methods `intercept` and `slope` for selecting based on the respective summary table columns. This is mostly useful for selecting from flowthrough rate results where these parameters can indicate the stability of the delta oxygen region rates are derived from (in other analyses slope is essentially equivalent to the rate). 
+- NEW: `convert_rate.ft` - Objects containing multiple rates can now be plotted in three different ways to help explore the results and decide how to summarise them. This pairs particularly well with `select_rate.ft` for exploring and selecting a final reportable rate. 
+- NEW: `select_rate.ft` - New function for selecting from amongst multiple rates in `convert_rate.ft` objects in flowthrough respirometry analyses. It is actually a simple wrapper for the `select_rate` function, so you can use either. 
+- NEW: `select_rate` - has the additional methods `rep_omit`, `rank_omit`, and `manual_omit` for omitting rates.
+- NEW: `select_rate` - has the additional methods `intercept` and `slope` for selecting based on the respective summary table columns. This is mostly useful for selecting from flowthrough rate results where these parameters can indicate the stability of the delta oxygen region rates are derived from (in other analyses slope is essentially equivalent to the rate). 
 
 =================================== Changes ====================================
 
-CHANGE: `convert_rate.ft` - Output objects have been restructured and new elements (e.g. `$dataframe`) brought forward from the input objects to enable plotting. 
-CHANGE: `convert_rate` - The y-axis range in the lower panel of `type = "rate"` plots now adapts to the range of rate values plotted if `pos` has been used. You can use this to get a better idea of range of rates in a particular region. 
-CHANGE: In summary tables the `rate_b1` column (the slope in the linear regression model used to calculate the rate) has been renamed to `slope_b1`.
+- CHANGE: `convert_rate.ft` - Output objects have been restructured and new elements (e.g. `$dataframe`) brought forward from the input objects to enable plotting. 
+- CHANGE: `convert_rate` - The y-axis range in the lower panel of `type = "rate"` plots now adapts to the range of rate values plotted if `pos` has been used. You can use this to get a better idea of range of rates in a particular region. 
+- CHANGE: In summary tables the `rate_b1` column (the slope in the linear regression model used to calculate the rate) has been renamed to `slope_b1`.
 
 ==================================== Fixes =====================================
 
-FIX: `convert_rate.ft` - Now correctly converts rates to output units using nanomoles (`nmol`) and picomoles (`pmol`) (e.g. `pmol/min`, `nmol/hr/ug`, etc.).
+- FIX: `convert_rate.ft` - Now correctly converts rates to output units using nanomoles (`nmol`) and picomoles (`pmol`) (e.g. `pmol/min`, `nmol/hr/ug`, etc.).
 
 
 ## Version 2.1.0 -- 2022-12-06
@@ -71,7 +98,7 @@ There is also a major focus on exploring and filtering results to help with outp
 - CHANGE: All summary tables now have the additional column `$rep` as the first column. This contains the replicate number that the rate came from when using `calc_rate.int` and `auto_rate.int` on intermittent-flow data. For other cases it is filled with `NA`.
 - CHANGE: `adjust_rate` and `convert_rate` now have the additional element `$dataframe` in the output. This is the raw data carried forward from whatever object was initially entered. It was always present in the `$inputs`, but is now also placed at the top level for convenience. If numeric values were entered it will be present as `NULL`. 
 - CHANGE: `auto_rate` - For the `linear` method, the kernel density analysis results are now *not* printed to the console when using `summary()`. Only the summary table will be printed, making for a cleaner print out. This can be changed back to the old behaviour by passing `print.kds = TRUE` in `summary`. 
-- CHANGE: The `plot_ar` function for plotting `auto_rate` results has been removed, but the plotting functionality has been added to `convert_rate` as the `type = "overlap"` option. Therefore you will need to convert `auto_rate` results before plotting them. (If you really need to you can actually still plot `auto_rate` objects by calling the internal function `overlap.p` using three colons, i.e. `respR:::overlap.p()`)
+- CHANGE: The `plot_ar` function for plotting `auto_rate` results has been removed, but the plotting functionality has been added to `convert_rate` as the `type = "overlap"` option. Therefore you will need to convert `auto_rate` results before plotting them. (If you really need to you can actually still plot `auto_rate` objects by calling the internal function `overlap.p` using three colons, i.e. `overlap.p()`)
 - CHANGE: `convert_rate`, `convert_rate.ft` - The behaviour introduced in `v2.0.1` where `summary()` would print only a condensed version of the summary table has been reversed. This is because it made it difficult to view the results of selection operations in `select_rate` on columns not printed to the console. The full table is now printed, even though it is quite large. You can still use `export = TRUE` to export the table as a data frame for easier viewing.
 - CHANGE: `subset_data` - No longer prints a subset summary to the console (i.e. `quiet = TRUE` is the default).  
 - CHANGE: `select_rate` - The `"time_omit"` and `"row_omit"` methods have a progress bar when `n` is a vector of three or more values. This is because these methods are extremely computationally intensive when this is the case and may take some time. If possible you should always use a time or row range of lower and upper values instead (e.g. `n = c(10, 20)` instead of `10:20`).   
@@ -95,22 +122,22 @@ Minor changes to help documentation.
 
 ## Version 2.0.1 -- 2022-03-14
 
-Only a month after 2.0.0, this is a quick update that fixes a few bugs, adds a couple of enhancements, and has quite a large revision to the newest function `select_rate`. 
+Only a month after 2.0.0, this is a quick update that fixes a few bugs, adds a couple of enhancements, and has quite a large revision to the newest function `subset_rate`. 
 
 ==================================== New =======================================
 
 - NEW: The `calc_rate` function can now be used to calculate background rates for use in `adjust_rate` as the `by` adjustment input. In other words, the `by` input is no longer limited to using only `calc_rate.bg` objects (or numerics). While using a combination of `subset_data` and `calc_rate.bg` is the recommended way of determining background rates, there are circumstances when getting a rate via `calc_rate` might be easier (of course, these rates could always previously have been entered manually as a numeric value). See [here](https://januarharianto.github.io/respR/articles/adjust_rate.html#crbgvcr) for further information about this. 
 - NEW: The `convert_rate` and `convert_rate.ft` summary table elements in the output now contain all rate regression parameters, data locations, adjustments (if applied), units, and more. This makes it much easier to save and keep track of *all* relevant data regarding rate results. They can be saved by extracting `$summary` directly from the output, or using `summary(object, export = TRUE`). Note, `summary()` only prints a condensed version to the console as the full table is too large to print. 
 
-=============================== select_rate() ==================================
+=============================== subset_rate() ==================================
 
-- NEW: `select_rate` can now *reorder* `auto_rate` results in various ways. This can be useful in several situations. See help docs and vignette on website for more information and examples.
+- NEW: `subset_rate` can now *reorder* `auto_rate` results in various ways. This can be useful in several situations. See help docs and vignette on website for more information and examples.
 - NEW: There is a new `"rank"` method for subsetting based on the `$rank` column of the summary table. The rank always refers to the original rate ranking or ordering as determined in the original `auto_rate` call, which is retained unchanged regardless of how the results are subsequently subset or reordered.
-- NEW: There is a new `"oxygen"` method for subsetting based on oxygen values in the raw data. This can be used to constrain results to particular oxygen ranges. Conversely, to *exclude* particular oxygen values or ranges you can use the `oxygen_omit` method. See `help("select_rate")` for specific details. 
+- NEW: There is a new `"oxygen"` method for subsetting based on oxygen values in the raw data. This can be used to constrain results to particular oxygen ranges. Conversely, to *exclude* particular oxygen values or ranges you can use the `oxygen_omit` method. See `help("subset_rate")` for specific details. 
 - CHANGE: For the `"row_omit"` and `"time_omit"` methods, the `n` input can now be a numeric vector of any length. Regressions (i.e. rates) fit across any time or row value in `n` will be omitted. A continuous range of rows or time can still be entered by using regular R syntax for creating vectors such as `n = 10:20` or `seq()`.  
 - CHANGE: For the `rate`, `rsq`, `row`, `time`, and `density` methods the `n` input of two values can now be entered in any order.   
-- CHANGE: The `plot` input default has been changed to `FALSE`, and the internal plotting for this function has been revised to be much quicker and show more plots (up to a max of 20 from 9). See help file for more info but briefly, this plotting functionality is intended to provide a quick view of how many rates remain after subsetting and where they occur in the data. In many cases it does not need to be run in every `select_rate` call. 
-- CHANGE: `select_rate` and `auto_rate` now behave better with objects which contain zero results, and allow piping operations to continue even if an empty object is encountered somewhere in the pipe. This can occur if subsetting criteria excludes every rate. These `auto_rate_subset` objects with no results now work with `print`, `summary`, and `mean` giving a message that they contain no rates but still printing to the console. `select_rate` will now *not* stop if an empty object is input as `x` or piped from a previous `select_rate` operation. Trying to plot these empty objects in `plot` or `plot_ar` and also will not stop any pipes, and will result in a console message but no plot. 
+- CHANGE: The `plot` input default has been changed to `FALSE`, and the internal plotting for this function has been revised to be much quicker and show more plots (up to a max of 20 from 9). See help file for more info but briefly, this plotting functionality is intended to provide a quick view of how many rates remain after subsetting and where they occur in the data. In many cases it does not need to be run in every `subset_rate` call. 
+- CHANGE: `subset_rate` and `auto_rate` now behave better with objects which contain zero results, and allow piping operations to continue even if an empty object is encountered somewhere in the pipe. This can occur if subsetting criteria excludes every rate. These `auto_rate_subset` objects with no results now work with `print`, `summary`, and `mean` giving a message that they contain no rates but still printing to the console. `subset_rate` will now *not* stop if an empty object is input as `x` or piped from a previous `subset_rate` operation. Trying to plot these empty objects in `plot` or `plot_ar` and also will not stop any pipes, and will result in a console message but no plot. 
 
 =============================== General Changes ================================
 
@@ -120,7 +147,7 @@ Only a month after 2.0.0, this is a quick update that fixes a few bugs, adds a c
 
 ==================================== Fixes =====================================
 
-- FIX: `adjust_rate` - Fix for warnings when using `auto_rate` objects which have been passed through `select_rate` with paired or dynamic adjustment methods. 
+- FIX: `adjust_rate` - Fix for warnings when using `auto_rate` objects which have been passed through `subset_rate` with paired or dynamic adjustment methods. 
 - FIX: `plot_ar` - Fix for incorrect subset number appearing in plot titles.
 - FIX: `plot_ar` - Fix for the `pos` and `highlight` inputs sometimes failing to produce expected behaviour.
 
@@ -147,13 +174,13 @@ We are happy to say the package has never been more stable and even easier to us
 ================================== HIGHLIGHTS ==================================
 
 - NEW: `respR` is now [available on CRAN](https://CRAN.R-project.org/package=respR). It can be installed just like any other package via the RStudio package manager tab or by running `install.packages("respR")`. If you want to be on the bleeding edge, for example test out the latest dev version, you can use `install.github()` and the `ref` input to select a different branch.
-- NEW: `select_rate` function. This allows `auto_rate` results to be explored and filtered according to various criteria.
-- NEW: `plot_ar` function. This plots `auto_rate` objects in a way that visualises how results are distributed within the dataset. Pairs very nicely with `select_rate` above. 
+- NEW: `subset_rate` function. This allows `auto_rate` results to be explored and filtered according to various criteria.
+- NEW: `plot_ar` function. This plots `auto_rate` objects in a way that visualises how results are distributed within the dataset. Pairs very nicely with `subset_rate` above. 
 - NEW: `adjust_rate` contains several new methods of adjusting for background respiration, including the ability to perform adjustments from paired or concurrent blank chambers, and to perform dynamic adjustments for background rates which change over the course of an experiment.
 - NEW: Completely new flowthrough respirometry workflow. There are four new flowthrough-specific functions and new functionality for exploring, calculating and adjusting rates from flowthrough respirometry data.
 - NEW: `inspect` and `inspect.ft` performs additional data checks: that columns contain numeric data and a check for infinite values
 - NEW: Rates can now be output as surface area-specific rates via the `area` input in `convert_rate` (accepts `"mm2"`, `"cm2"`, `"m2"`, `"km2"`). You can also use `day` as the time metric in output rates (e.g. `"mgO2/day/m2"`)
-- NEW: `auto_rate` `"rolling"` method. Performs fixed-width rolling regressions across the entire dataset with no ordering of results. This pairs nicely with the new `select_rate` function to allows users full control of selection criteria (albeit with fixed width regressions)
+- NEW: `auto_rate` `"rolling"` method. Performs fixed-width rolling regressions across the entire dataset with no ordering of results. This pairs nicely with the new `subset_rate` function to allows users full control of selection criteria (albeit with fixed width regressions)
 - NEW: `auto_rate` `"highest"` and `"lowest"` methods for absolute minimum and maximum of rates regardless of sign
 - NEW: Several new dissolved oxygen units are now supported in `convert_DO` and `convert_rate` including percent oxygen saturation, moles of oxygen, and more.
 - NEW: `convert_val` function. A simple conversion function to help with inputting experimental parameters in the correct units.
@@ -222,7 +249,7 @@ We are happy to say the package has never been more stable and even easier to us
 
 ================================ auto_rate() ===================================
 
-- NEW - `"rolling"` method. Performs simple rolling regression of specified width, with *no* ordering of results. This pairs nicely with the new `select_rate` function to allows users full control of selection criteria (albeit with fixed width regressions)
+- NEW - `"rolling"` method. Performs simple rolling regression of specified width, with *no* ordering of results. This pairs nicely with the new `subset_rate` function to allows users full control of selection criteria (albeit with fixed width regressions)
 - NEW `"highest"` and `"lowest"` methods for *absolute* minimum and maximum rate values regardless of sign. These can only be used when rates all have the same sign.
 - NEW `"maximum"` and `"minimum"` methods. These work the *opposite* way to `"min"` and `"max"` from v1.1. These are strictly numerical, and order by value taking account of the sign.
 - NEW: Added the Kernel Density metric `$density` to the `$summary` table for the `"linear"` method. This allows you to see how the results are ranked in regards to KDE (also present for other methods, but as an `NA` column).
@@ -424,7 +451,7 @@ NEW: New example datasets
 - CHANGE: Consistently named inputs (for `summary()` the first input should be `object`, but in all others it is `x`)
 - CHANGE: All console output prints more consistently with nicer spacing, especially in pipes
 
-- FIX: In `auto_rate` S3 methods stop with a message if no rates found in object (this can happen with over-enthusiastic subsetting in the new `select_rate` function)
+- FIX: In `auto_rate` S3 methods stop with a message if no rates found in object (this can happen with over-enthusiastic subsetting in the new `subset_rate` function)
 - FIX: All revised to work correctly with `|>` or `%>%` pipes
 
 
@@ -450,7 +477,7 @@ Lots of updates! First, we have a new function, `calc_pcrit()`, which we will us
 - NEW: `calc_pcrit()` is a **new function** that will be developed in parallel to the current `pcrit()` function. In the future we intend to use `calc_pcrit()` to incorporate new methods. 
 - NEW: `import_file()` supports even more files! Added more parsers for Vernier, PRESENS and Loligo systems.
 - NEW: `format_time()` can now calculate time elapsed even if date information is not provided (e.g. "HMS"-only data). 
-- NEW: The `by` input in `auto_rate()`, `calc_rate()`, `calc_rate.bg()` and `subset_data()` is now more forgiving with string input values (e.g. `"oxygen"`, `"Oxygen"`, `"o2"`, `"O2"`, etc. are recognised). To achieve this we created a string matching function, `verify_by()` which uses brute force matching to recognise different ways of writing the same text.
+- NEW: The `by` input in `auto_rate()`, `calc_rate()`, `calc_rate.bg()` and `subset_data()` is now more forgiving with string input values (e.g. `"oxygen"`, `"Oxygen"`, `"o2"`, `"O2"`, etc. are recognised). To achieve this we created a string matching function, `by.val()` which uses brute force matching to recognise different ways of writing the same text.
 
 ### Fixes
 
