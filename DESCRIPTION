@@ -3,7 +3,7 @@ Type: Package
 Title: Import, Process, Analyse, and Calculate Rates from Respirometry
         Data
 Date: 2023-06-04
-Version: 2.3.0
+Version: 2.3.1
 Maintainer: Nicholas Carey <nicholascarey@gmail.com>
 Authors@R: c(
     person(given = "Nicholas", 
@@ -32,8 +32,8 @@ Imports: data.table, dplyr, glue, graphics, grDevices, lubridate,
         stringr, utils, xml2
 Suggests: knitr, rmarkdown, rMR, FishResp, respirometry, testthat, covr
 NeedsCompilation: no
-Packaged: 2023-06-04 18:27:37 UTC; nicholascarey
+Packaged: 2023-06-27 18:11:31 UTC; nicholascarey
 Author: Nicholas Carey [aut, cre],
   Januar Harianto [aut]
 Repository: CRAN
-Date/Publication: 2023-06-05 07:50:02 UTC
+Date/Publication: 2023-06-29 14:30:06 UTC
