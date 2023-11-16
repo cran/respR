@@ -1,11 +1,11 @@
-bb267c7d511e633f88a1800f86647f7f *DESCRIPTION
+783014e807af5ab64e4a32c6b68eb063 *DESCRIPTION
 e12828d0c987b83356090430deab7c0e *NAMESPACE
-39593a2422bdb4b564c730782dd98546 *NEWS.md
+b8c4ffea6640195c28cf436b6aed9799 *NEWS.md
 307c29c86ad7fa33d2210dec11ae1bdb *R/adjust_rate.R
 d45156398b034c44847157d0bccd4ffb *R/adjust_rate.ft.R
 cdbabea45b9527c90f5804c89bfb1acc *R/auto_rate.R
 aebcf08c3ca7cdfe858315b7fb741c96 *R/auto_rate.int.R
-c94607c85279cb6d609da06738999428 *R/auto_rate_funs.R
+6b5112efe25d704a058dd9874f2cb5e8 *R/auto_rate_funs.R
 acf1851c45617968262b0ded4f3ac3f2 *R/calc_rate.R
 047b6e7f7b3145544554737f1d26e9d1 *R/calc_rate.bg.R
 a92a15fddfb0b27cf623e07b8f66861a *R/calc_rate.ft.R
@@ -18,7 +18,7 @@ b53bac4bb7567a8918ebd32753d45297 *R/convert_MR.R
 26798ce148e8bc48cb5cc7c0d69a20d8 *R/data.R
 f027696556fb462da9a15b6ce2da23ca *R/format_time.R
 bd035259284852e2be08cec58a55f340 *R/import_file.R
-06ba22af4acb4759e16b8ab6c9e36762 *R/inspect.R
+b386dfe8f012fc008c090d5e58f913d4 *R/inspect.R
 ae1db9b45fb267b6c8a8652b80c519ff *R/inspect.ft.R
 cdbb453ff0329d1ef292f31872747898 *R/oxy_crit.R
 9377bf3fc4e1bbe463677a8e806edcd9 *R/respR.R
@@ -33,7 +33,7 @@ f6485d178d11c2ca59f39079546639ef *R/test_lin.R
 d3435307401bdcf0340c34b226a2c88f *R/util_funs.R
 a96548daaee7afaef08651f8f66783dd *R/util_plots.R
 9ab76b875d3efd9411cc6ada494b32da *R/util_val.R
-b9d61924193068e6f7c123f9837bdede *README.md
+38b979a4f941c003f782cbff33fcf8d4 *README.md
 6cbd738c4ccf4f10cd2a7ea6a8c49614 *data/algae.rd.rda
 c824f463e5b1f9ad4bbc2696c05bba97 *data/background_con.rd.rda
 6b64245b24f0bc90ed6ac188beb5c2a1 *data/background_exp.rd.rda
@@ -93,7 +93,7 @@ aeb9ba090bf6d00a6874517448641465 *man/flowthrough.rd.Rd
 b88d0ad59e2caf165146fcf0f1e9fb5c *man/get_dec.Rd
 7865534b2157c403cecdcd06c52e0243 *man/grapes-greater-than-grapes.Rd
 b22a3c64882a6b98616dfc016e24d60c *man/import_file.Rd
-0252f137c2a23d56e09f9a7b0863f452 *man/inspect.Rd
+310a02adff722fe6e47b8a44f0a36ece *man/inspect.Rd
 a673e89e5d1f72ad3485771ccb122cb4 *man/inspect.ft.Rd
 1df02e16a28733f89c56c3778d07cd94 *man/intermittent.rd.Rd
 83e6121c4792ee2bc18be2a22930d9df *man/kernel_method.Rd
@@ -174,14 +174,14 @@ d68625285a389e87290f514dc41296f6 *man/summary.inspect.Rd
 723b1d3972ef37a5a0b8881636cf2538 *man/summary.oxy_crit.Rd
 dfabccac6db3a1dd5a9b375b3219c229 *man/test_lin.Rd
 244dfc1e1b3c640bdcc2774e16d67888 *man/time_lm.Rd
-b6629b689d127f55c2c968da73de3512 *man/time_roll.Rd
+02a7029a4f0e0910859d9cebf7ec8fff *man/time_roll.Rd
 5a1a90555a1df188d6c9f63d849742e6 *man/unit_args.Rd
 4ecc27526bf989394dce46e31e6f1f9b *man/unit_type.Rd
 6ccdd11765f22cb1e5a3f85ec3e2ab40 *man/unit_type_o1.Rd
 c6ba37ba5a0b097bdaf6a12d8bac3e97 *man/units.clean.Rd
 49ce6dc7cf59c9dca6ea3f94f2ff7b98 *man/units.val.Rd
 9b799d5129aa6d3e3de6d90db98b9400 *man/urchins.rd.Rd
-0c9ad4c6acb18554f86c41e34905b21a *man/validate_auto_rate.Rd
+9a08558338c75e6bd2e0c1282b8b8d7e *man/validate_auto_rate.Rd
 3c79398241d5b975cf6b596ea8ebeafd *man/zeb_intermittent.rd.Rd
 3d1efb2a4a79f6fdfdaa7953ae2c9b06 *tests/testthat.R
 06e4cbce361fb6dd6a85c5c9cbab5155 *tests/testthat/test-adjust_rate.R
@@ -200,7 +200,7 @@ c9a731e6f871464dc9c9526e25b0379b *tests/testthat/test-convert_rate.R
 529290b370923ed48624783970f64d27 *tests/testthat/test-format_time.R
 b08a11f2e6d7d37b0aecf70bc99351e5 *tests/testthat/test-inspect.R
 f0433a4a591b803cc308d0014f45459f *tests/testthat/test-inspect.ft.R
-4dfae261ae6948aa398227a0becdd389 *tests/testthat/test-oxy_crit.R
+ac333d99d35107db07677a9cfca5380d *tests/testthat/test-oxy_crit.R
 e9c8b338d46b88db9ac3a0b2b0d3750f *tests/testthat/test-select_rate.R
 8edd940c508ede540f8828eac455d574 *tests/testthat/test-select_rate.ft.R
 dd81442fc925c2ae7e28394712050e19 *tests/testthat/test-subsample.R
