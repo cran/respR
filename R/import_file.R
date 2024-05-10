@@ -76,7 +76,6 @@
 #'   directory, as determined by the `path` parameter.
 #'
 #' @importFrom data.table data.table fread
-#' @importFrom readxl read_excel
 #' @importFrom xml2 xml_text
 #' @importFrom xml2 read_html
 #' @importFrom tools file_path_sans_ext
@@ -109,9 +108,9 @@ import_file <- function(path, export = FALSE) {
   ## output xl files
 
   if (grepl(".xls", path)) {
-    message("Excel file detected. Only Loligo/Presens Multiplate Excel files currently supported. \nImport will fail for others saved as Excel format. Use raw output files only.")
-    raw <- suppressMessages(read_excel(path, n_max = 20))
-    raw <- as.character(raw)
+    stop("import_file: Excel file detected. Excel support has been removed.")
+    #raw <- suppressMessages(read_excel(path, n_max = 20))
+    #raw <- as.character(raw)
   } else if (grepl("gmbl", path)) {
     raw <- suppressWarnings(readLines(path))
   } else {
@@ -176,9 +175,9 @@ import_file <- function(path, export = FALSE) {
              suppressWarnings(any(grepl("FIRMWARE", raw[1:80])))) {
     cat("PreSens Generic file detected\n")
     out <- parse_presens(path, dec = dec)
-  } else if (suppressWarnings(any(grepl("SDR Serial No.", raw[1:20])))) {
-    cat("Loligo/PreSens 24-well multiplate Excel file detected\n")
-    out <- parse_multiplate_excel(path, dec = dec)
+  # } else if (suppressWarnings(any(grepl("SDR Serial No.", raw[1:20])))) {
+  #   cat("Loligo/PreSens 24-well multiplate Excel file detected\n")
+  #   out <- parse_multiplate_excel(path, dec = dec)
   } else if (suppressWarnings(any(grepl("Tau - Phase Method", raw[1])))) {
     cat("NeoFox file detected\n")
     out <- parse_neofox(path, dec = dec)
@@ -212,17 +211,17 @@ import_file <- function(path, export = FALSE) {
 
 # Loligo/Presens multiplate system ----------------------------------------
 
-parse_multiplate_excel <- function(path, dec = dec){
-  raw <- suppressMessages(read_excel(path, col_names = TRUE))
-  ## which row has "Date/Time"
-  start_row <- which(grepl("^Date/Time$", raw[[1]]))
-  ## inport from that row on
-  raw <- suppressMessages(read_excel(path, skip = start_row - 1))
-  ## remove column 27 - empty
-  raw <- raw[,-27]
-  out <- data.table(raw)
-  return(out)
-}
+# parse_multiplate_excel <- function(path, dec = dec){
+#   raw <- suppressMessages(read_excel(path, col_names = TRUE))
+#   ## which row has "Date/Time"
+#   start_row <- which(grepl("^Date/Time$", raw[[1]]))
+#   ## inport from that row on
+#   raw <- suppressMessages(read_excel(path, skip = start_row - 1))
+#   ## remove column 27 - empty
+#   raw <- raw[,-27]
+#   out <- data.table(raw)
+#   return(out)
+# }
 
 # Vernier csv files -------------------------------------------------------
 
